@@ -43,8 +43,8 @@ def process(input_dir, output_dir, arch, encoder):
     save_figure(train_dataset, "Train", os.path.join(output_dir, figures_dir, "figure_01.png"))
     save_figure(valid_dataset, "Valid", os.path.join(output_dir, figures_dir, "figure_02.png"))
 
-def main(arch, input_dir, output_dir):
-    process(arch, input_dir, output_dir)
+def main(arch, encoder, input_dir, output_dir):
+    process(input_dir, output_dir, arch, encoder)
 
 parser = argparse.ArgumentParser(
     prog='Oil spill cimat dataset segmentation',
@@ -65,5 +65,6 @@ logger = logging.getLogger("lightning.pytorch")
 logger.addHandler(logging.FileHandler("core.log"))
 
 logging.info("Start!")
-main(arch, input_dir, output_dir)
+encoder = 'resnet34'
+main(arch, encoder, input_dir, output_dir)
 logging.info("Done!")
