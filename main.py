@@ -5,7 +5,7 @@ import pytorch_lightning as pl
 
 from torch.utils.data import DataLoader
 from dataset import CimatOilSpillDataset
-from model import CimatOilModel
+#from model import CimatOilModel
 from utils import save_figure, test_model
 from pytorch_lightning.loggers import CSVLogger
 
