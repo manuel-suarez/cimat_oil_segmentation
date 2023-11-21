@@ -15,7 +15,7 @@ def create_datasets(data_dir, train_dataset, cross_dataset):
     labelsPath = os.path.join(data_dir, 'labels')
     featureExt = '.tiff'
     labelExt = '.pgm'
-    dims = [224, 244, 3]
+    dims = [224, 224, 3]
     featuresChannels = ['ORIGIN', 'ORIGIN', 'VAR']
     trainingSet = pd.read_csv(train_dataset)
     crossvalidSet = pd.read_csv(cross_dataset)
