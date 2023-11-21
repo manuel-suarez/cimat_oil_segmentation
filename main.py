@@ -55,6 +55,9 @@ def process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset):
     save_figure(train_dataset, "Train", os.path.join(figures_dir, "figure_01.png"))
     save_figure(valid_dataset, "Valid", os.path.join(figures_dir, "figure_02.png"))
 
+    logging.info("2.- Model instantiation")
+    model = CimatOilSpillModel()
+
 def main(arch, encoder, input_dir, output_dir, train_dataset, cross_dataset):
     process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset)
 
