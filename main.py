@@ -64,7 +64,7 @@ def process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset):
 
     logging.info("3.- Model training")
     logger = CSVLogger(os.path.join(results_dir, logs_dir))
-    trainer = pl.Trainer(gpus=1, max_epochs=2, logger=logger)
+    trainer = pl.Trainer(gpus=1, max_epochs=10, logger=logger)
     trainer.fit(model, train_dataloader=train_dataloader, val_dataloaders=valid_dataloader)
 
 def main(arch, encoder, input_dir, output_dir, train_dataset, cross_dataset):
@@ -82,7 +82,7 @@ parser.add_argument('train_dataset')
 parser.add_argument('cross_dataset')
 args = parser.parse_args()
 arch = args.arch
-logging.basicConfig(filename=f"{arch}_app.log", filemode='w', format='%(asctime)s: %(name)s %(levelname)s - %(message)s', level=logging.DEBUG)
+logging.basicConfig(filename=f"{arch}_app.log", filemode='w', format='%(asctime)s: %(name)s %(levelname)s - %(message)s', level=logging.INFO)
 
 # redirect lightning logging to file
 logger = logging.getLogger("lightning.pytorch")
