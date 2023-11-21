@@ -82,7 +82,7 @@ parser.add_argument('train_dataset')
 parser.add_argument('cross_dataset')
 args = parser.parse_args()
 arch = args.arch
-logging.basicConfig(filename=f"{arch}_app.log", filemode='w', format='%(asctime)s: %(name)s %(levelname)s - %(message)s', level=logging.INFO)
+logging.basicConfig(filename=f"{arch}_app.log", filemode='w', format='%(asctime)s: %(name)s %(levelname)s - %(message)s', level=logging.DEBUG)
 
 # redirect lightning logging to file
 logger = logging.getLogger("lightning.pytorch")
