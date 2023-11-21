@@ -18,4 +18,4 @@ crossdataset=$input_path/learningCSV_geo/crossFiles/cross$num_dataset'.csv'
 # Training params
 arch='Unet'
 
-~/miniconda3/envs/smpt_py38/bin/python main.py --arch=$arch --input_dir=$input_path --output_dir=$output_path --train_dataset=$traindataset --cross_dataset=$crossdataset
+~/miniconda3/envs/smpt_py38/bin/python main.py $arch $input_path $output_path $traindataset $crossdataset
