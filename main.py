@@ -46,12 +46,14 @@ def process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset):
     train_dataloader, valid_dataloader = create_dataloaders(os.cpu_count(), train_dataset, valid_dataset)
 
     figures_dir = f"{arch}_figures"
+    if not os.path.exists(figures_dir):
+        os.makedirs(figures_dir, exist_ok=True)
     results_dir = f"{arch}_results"
     logs_dir = f"{arch}_logs"
 
     # Samples
-    save_figure(train_dataset, "Train", os.path.join(output_dir, figures_dir, "figure_01.png"))
-    save_figure(valid_dataset, "Valid", os.path.join(output_dir, figures_dir, "figure_02.png"))
+    save_figure(train_dataset, "Train", os.path.join(figures_dir, "figure_01.png"))
+    save_figure(valid_dataset, "Valid", os.path.join(figures_dir, "figure_02.png"))
 
 def main(arch, encoder, input_dir, output_dir, train_dataset, cross_dataset):
     process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset)
