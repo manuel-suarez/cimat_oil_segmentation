@@ -33,7 +33,7 @@ class CimatOilSpillDataset(torch.utils.data.Dataset):
         # Key index (filename)
         key = self.keys[index]
         # Open feature channels and build multichannel image
-        image = np.zeros(self.dim, dtype=np.float32)
+        image = np.zeros(self.dims, dtype=np.float32)
         for j, feature in enumerate(self.featuresChannels):
             feature_path = os.path.join(self.featuresPath, feature, key + self.featureExt)
             feature_image = imread(feature_path, as_gray=True).astype(np.float32)
