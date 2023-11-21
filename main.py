@@ -6,7 +6,7 @@ import pytorch_lightning as pl
 
 from torch.utils.data import DataLoader
 from dataset import CimatOilSpillDataset
-#from model import CimatOilModel
+from model import CimatOilSpillModel
 from utils import save_figure, test_model
 from pytorch_lightning.loggers import CSVLogger
 
@@ -46,17 +46,26 @@ def process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset):
     train_dataloader, valid_dataloader = create_dataloaders(os.cpu_count(), train_dataset, valid_dataset)
 
     figures_dir = f"{arch}_figures"
-    if not os.path.exists(figures_dir):
-        os.makedirs(figures_dir, exist_ok=True)
     results_dir = f"{arch}_results"
     logs_dir = f"{arch}_logs"
+    if not os.path.exists(figures_dir):
+        os.makedirs(figures_dir, exist_ok=True)
+    if not os.path.exists(results_dir):
+        os.makedirs(results_dir, exist_ok=True)
+    if not os.path.exists(logs_dir):
+        os.makedirs(logs_dir, exist_ok=True)
 
     # Samples
     save_figure(train_dataset, "Train", os.path.join(figures_dir, "figure_01.png"))
     save_figure(valid_dataset, "Valid", os.path.join(figures_dir, "figure_02.png"))
 
     logging.info("2.- Model instantiation")
-    model = CimatOilSpillModel()
+    model = CimatOilSpillModel(arch, "resnet34", in_channels=3, out_classes=1)
+
+    logging.info("3.- Model training")
+    logger = CSVLogger(os.path.join(results_dir, logs_dir))
+    trainer = pl.Trainer(gpus=1, max_epochs=2, logger=logger)
+    trainer.fit(model, train_dataloader=train_dataloader, val_dataloaders=valid_dataloader)
 
 def main(arch, encoder, input_dir, output_dir, train_dataset, cross_dataset):
     process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset)
