@@ -13,8 +13,8 @@ base=$HOME
 dataset=$base/data/projects/consorcio-ia/data/oil_spills_17
 input_path=$dataset/augmented_dataset
 output_path=$dataset/training_results
-traindataset=$input_path/learningCSV_geo/trainingFiles/train$num_dataset'.csv'
-crossdataset=$input_path/learningCSV_geo/crossFiles/cross$num_dataset'.csv'
+traindataset=$input_path/learnigCSV_geo/trainingFiles/train$num_dataset'.csv'
+crossdataset=$input_path/learnigCSV_geo/crossFiles/cross$num_dataset'.csv'
 # Training params
 arch='Unet'
 
