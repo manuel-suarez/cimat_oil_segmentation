@@ -16,9 +16,9 @@ def save_figure(dataset, name, figname):
     label = sample["label"]
     logging.info(f"Label shape: {label.shape}")
     label = label.squeeze()
-    logging.info(f"Mask squeeze shape: {label.shape}")
+    logging.info(f"Label squeeze shape: {label.shape}")
     # Display first mask only
-    plt.imshow(label[0])
+    plt.imshow(label)
     plt.savefig(figname)
     plt.close()
     logging.info(f"\tSaving figure {name}, image shape: {sample['image'].shape}")
