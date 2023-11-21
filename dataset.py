@@ -43,7 +43,7 @@ class CimatOilSpillDataset(torch.utils.data.Dataset):
         image = np.moveaxis(image, -1, 0)
         # Open label
         label_path = os.path.join(self.labelsPath, key + self.labelExt)
-        label = np.zeros(self.dims[0], self.dims[1], 1)
+        label = np.zeros((self.dims[0], self.dims[1], 1))
         label[...,0] = imread(label_path, as_gray=True).astype(np.float32)/255.0
         label = np.moveaxis(image, -1, 0)
         # Return data
