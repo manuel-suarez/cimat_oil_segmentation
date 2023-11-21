@@ -30,12 +30,13 @@ class CimatOilSpillModel(pl.LightningModule):
 
     def shared_step(self, batch, stage):
         image = batch["image"]
+        bs = image.shape[0]
         h, w = image.shape[2:]
 
         # Shape of the image should be (batch_size, num_channels, height, widt)
         logging.debug(f"Shared step, stage: {stage}, image shape: {image.shape}")
         assert image.ndim == 4
-        assert image.shape == (32, 3, h, w) # Multichannel image composition (depending on configuration)
+        assert image.shape == (bs, 3, h, w) # Multichannel image composition (depending on configuration)
 
         # Check image dimensions are divisible by 32 (dimensionality reduction)
         assert h % 32 == 0 and w % 32 == 0
@@ -45,7 +46,7 @@ class CimatOilSpillModel(pl.LightningModule):
         # Shape of the label should be (batch_size, 1, height, width) binary classification
         logging.debug(f"Shared step, stage: {stage}, label shape: {label.shape}")
         assert label.ndim == 4
-        assert label.shape == (32, self.classes, h, w)
+        assert label.shape == (bs, self.classes, h, w)
 
         # Check that label values are between 0 and 1
         assert label.max() <= 1 and label.min() >= 0
