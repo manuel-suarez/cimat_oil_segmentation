@@ -51,11 +51,11 @@ parser = argparse.ArgumentParser(
     description='Segmentation on Cimat oil spill dataset',
     epilog='With a great power comes a great responsability'
 )
-parser.add_argument('architecture')
+parser.add_argument('arch')
 parser.add_argument('input_dir')
 parser.add_argument('output_dir')
 args = parser.parse_args()
-arch = args.architecture
+arch = args.arch
 input_dir = args.input_dir
 output_dir = args.output_dir
 logging.basicConfig(filename=f"{arch}_app.log", filemode='w', format='%(asctime)s: %(name)s %(levelname)s - %(message)s', level=logging.INFO)
