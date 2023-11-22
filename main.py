@@ -64,7 +64,7 @@ def process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset):
 
     logging.info("3.- Model training")
     logger = CSVLogger(os.path.join(results_dir, logs_dir))
-    trainer = pl.Trainer(gpus=1, max_epochs=10, logger=logger)
+    trainer = pl.Trainer(gpus=1, max_epochs=50, logger=logger)
     trainer.fit(model, train_dataloader=train_dataloader, val_dataloaders=valid_dataloader)
 
 def main(arch, encoder, input_dir, output_dir, train_dataset, cross_dataset):
