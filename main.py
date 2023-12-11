@@ -1,8 +1,10 @@
 import os
+import torch
 import logging
 import argparse
 import pandas as pd
 import pytorch_lightning as pl
+import matplotlib.pyplot as plt
 
 from torch.utils.data import DataLoader
 from dataset import CimatOilSpillDataset
@@ -80,6 +82,32 @@ def process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset, 
     # run test dataset
     test_metrics = trainer.test(model, dataloaders=test_dataloader, verbose=False)
     pprint(test_metrics)
+
+    logging.info("5.- Result visualization")
+    batch = next(iter(test_dataloader))
+    with torch.no_grad():
+        model.eval()
+        logits = model(batch["image"])
+    pr_labels = logits.sigmoid()
+    for index, (image, gt_label, pr_label) in enumerate(zip(batch["image"], batch["label"], pr_labels)):
+        plt.figure(figsize=(10, 5))
+
+        plt.subplot(1, 3, 1)
+        plt.imshow(image.numpy().transpose(1, 2, 0)) # convert CHW -> HWC
+        plt.title("Image")
+        plt.axis("off")
+
+        plt.subplot(1, 3, 2)
+        plt.imshow(gt_label.numpy().squeeze()) # only one class
+        plt.title("Label")
+        plt.axis("off")
+
+        plt.subplot(1, 3, 3)
+        plt.imshow(pr_label.numpy().squeeze())
+        plt.title("Prediction")
+        plt.axis("off")
+
+        plt.savefig(os.path.join(figures_dir, f"figure_0{index+3+1}.png"))
 
 def main(arch, encoder, input_dir, output_dir, train_dataset, cross_dataset, test_dataset):
     process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset, test_dataset)
