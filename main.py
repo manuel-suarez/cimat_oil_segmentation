@@ -36,7 +36,7 @@ def create_dataloaders(n_cpu, train_dataset, valid_dataset, test_dataset):
         DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=n_cpu)
     )
 
-def process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset, test_dataset):
+def process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset, test_dataset, num_epochs):
     logging.info("Begin process")
     logging.info(f"\tArchitecture: {arch}")
     logging.info(f"\tEncoder: {encoder}")
@@ -72,7 +72,7 @@ def process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset, 
 
     logging.info("3.- Model training")
     logger = CSVLogger(os.path.join(results_dir, logs_dir))
-    trainer = pl.Trainer(gpus=1, max_epochs=5, logger=logger)
+    trainer = pl.Trainer(gpus=1, max_epochs=num_epochs, logger=logger)
     trainer.fit(model, train_dataloader=train_dataloader, val_dataloaders=valid_dataloader)
 
     logging.info("4.- Validation and test metrics")
@@ -109,8 +109,8 @@ def process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset, 
 
         plt.savefig(os.path.join(figures_dir, f"figure_0{index+3+1}.png"))
 
-def main(arch, encoder, input_dir, output_dir, train_dataset, cross_dataset, test_dataset):
-    process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset, test_dataset)
+def main(arch, encoder, input_dir, output_dir, train_dataset, cross_dataset, test_dataset, num_epochs):
+    process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset, test_dataset, num_epochs)
 
 parser = argparse.ArgumentParser(
     prog='Oil spill cimat dataset segmentation',
@@ -123,6 +123,7 @@ parser.add_argument('output_dir')
 parser.add_argument('train_dataset')
 parser.add_argument('cross_dataset')
 parser.add_argument('test_dataset')
+parser.add_argument('num_epochs')
 args = parser.parse_args()
 arch = args.arch
 logging.basicConfig(filename=f"{arch}_app.log", filemode='w', format='%(asctime)s: %(name)s %(levelname)s - %(message)s', level=logging.INFO)
@@ -133,5 +134,5 @@ logger = logging.getLogger("lightning.pytorch")
 
 logging.info("Start!")
 encoder = 'resnet34'
-main(arch, encoder, args.input_dir, args.output_dir, args.train_dataset, args.cross_dataset, args.test_dataset)
+main(arch, encoder, args.input_dir, args.output_dir, args.train_dataset, args.cross_dataset, args.test_dataset, args.num_epochs)
 logging.info("Done!")

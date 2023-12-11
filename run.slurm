@@ -9,6 +9,7 @@
 
 # Dataset Cimat paths
 num_dataset=20
+num_epochs=5
 base=$HOME
 dataset=$base/data/projects/consorcio-ia/data/oil_spills_17
 input_path=$dataset/augmented_dataset
@@ -19,4 +20,4 @@ testdataset=$input_path/learningCSV_geo/testingFiles/test$num_dataset'.csv'
 # Training params
 arch='Unet'
 
-~/miniconda3/envs/smpt_py38/bin/python main.py $arch $input_path $output_path $traindataset $crossdataset $testdataset
+~/miniconda3/envs/smpt_py38/bin/python main.py $arch $input_path $output_path $traindataset $crossdataset $testdataset $num_epochs
