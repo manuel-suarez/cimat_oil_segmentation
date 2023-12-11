@@ -16,7 +16,7 @@ input_path=$dataset/augmented_dataset
 output_path=$dataset/training_results
 traindataset=$input_path/learnigCSV_geo/trainingFiles/train$num_dataset'.csv'
 crossdataset=$input_path/learnigCSV_geo/crossFiles/cross$num_dataset'.csv'
-testdataset=$input_path/learningCSV_geo/testingFiles/test$num_dataset'.csv'
+testdataset=$input_path/learnigCSV_geo/testingFiles/test$num_dataset'.csv'
 # Training params
 arch='Unet'
 
