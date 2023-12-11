@@ -134,5 +134,5 @@ logger = logging.getLogger("lightning.pytorch")
 
 logging.info("Start!")
 encoder = 'resnet34'
-main(arch, encoder, args.input_dir, args.output_dir, args.train_dataset, args.cross_dataset, args.test_dataset, args.num_epochs)
+main(arch, encoder, args.input_dir, args.output_dir, args.train_dataset, args.cross_dataset, args.test_dataset, int(args.num_epochs))
 logging.info("Done!")
