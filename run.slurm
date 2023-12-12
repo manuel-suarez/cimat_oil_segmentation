@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --partition=GPU
-#SBATCH --job-name=Unet-SMPT
+#SBATCH --job-name=Models-SMP
 #SBATCH --mem=0
 #SBATCH --time=0
 #SBATCH --mail-user=manuel.suarez@cimat.mx
