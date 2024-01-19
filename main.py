@@ -91,7 +91,7 @@ def process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset, 
 def main(arch, encoder, input_dir, output_dir, train_dataset, cross_dataset, test_dataset, num_epochs):
     process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset, test_dataset, num_epochs)
 
-if __name__ == 'main':
+if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         prog='Oil spill cimat dataset segmentation',
         description='Segmentation on Cimat oil spill dataset',

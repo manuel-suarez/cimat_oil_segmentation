@@ -20,22 +20,24 @@ def process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset, 
                          resume_from_checkpoint=f"{arch}_{encoder}_{num_epochs}epochs.ckpt")
     trainer.fit(model, train_dataloader=train_dataloader, val_dataloaders=valid_dataloader)
 
+
 def test(arch, encoder, input_dir, output_dir, train_dataset, cross_dataset, test_dataset, num_epochs):
     process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset, test_dataset, num_epochs)
 
-parser = argparse.ArgumentParser(
-    prog='Oil spill cimat dataset segmentation',
-    description='Segmentation on Cimat oil spill dataset',
-    epilog='With a great power comes a great responsability'
-)
-parser.add_argument('arch')
-parser.add_argument('input_dir')
-parser.add_argument('output_dir')
-parser.add_argument('train_dataset')
-parser.add_argument('cross_dataset')
-parser.add_argument('test_dataset')
-parser.add_argument('num_epochs')
-args = parser.parse_args()
-arch = args.arch
-encoder = 'resnet34'
-test(arch, encoder, args.input_dir, args.output_dir, args.train_dataset, args.cross_dataset, args.test_dataset, int(args.num_epochs))
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        prog='Oil spill cimat dataset segmentation',
+        description='Segmentation on Cimat oil spill dataset',
+        epilog='With a great power comes a great responsability'
+    )
+    parser.add_argument('arch')
+    parser.add_argument('input_dir')
+    parser.add_argument('output_dir')
+    parser.add_argument('train_dataset')
+    parser.add_argument('cross_dataset')
+    parser.add_argument('test_dataset')
+    parser.add_argument('num_epochs')
+    args = parser.parse_args()
+    arch = args.arch
+    encoder = 'resnet34'
+    test(arch, encoder, args.input_dir, args.output_dir, args.train_dataset, args.cross_dataset, args.test_dataset, int(args.num_epochs))
