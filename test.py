@@ -14,10 +14,11 @@ def process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset, 
     encoder = "resnet34"
     model = CimatOilSpillModel(arch, encoder=encoder, in_channels=3, out_classes=1)
 
+    checkpoint_path = os.path.join("/home/manuelsuarez/projects/smpt-50/training/Unet_results/Unet_logs/default/version_0/checkpoints", "epoch=49-step=80799.ckpt")
     trainer = pl.Trainer(accelerator="cpu",
                          max_epochs=num_epochs,
                          default_root_dir='results',
-                         resume_from_checkpoint=f"{arch}_{encoder}_{num_epochs}epochs.ckpt")
+                         resume_from_checkpoint=checkpoint_path)
     trainer.fit(model, train_dataloader=train_dataloader, val_dataloaders=valid_dataloader)
 
 
