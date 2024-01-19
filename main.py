@@ -73,7 +73,7 @@ def process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset, 
 
     logging.info("3.- Model training")
     logger = CSVLogger(os.path.join(results_dir, logs_dir))
-    trainer = pl.Trainer(gpus=1, max_epochs=num_epochs, logger=logger)
+    trainer = pl.Trainer(gpus=1, max_epochs=num_epochs, logger=logger, default_root_dir='results')
     trainer.fit(model, train_dataloader=train_dataloader, val_dataloaders=valid_dataloader)
     trainer.save_checkpoint(f"{arch}_{encoder}_{num_epochs}epochs.ckpt")
 
