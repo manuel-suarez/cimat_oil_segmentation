@@ -115,27 +115,28 @@ def process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset, 
 def main(arch, encoder, input_dir, output_dir, train_dataset, cross_dataset, test_dataset, num_epochs):
     process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset, test_dataset, num_epochs)
 
-parser = argparse.ArgumentParser(
-    prog='Oil spill cimat dataset segmentation',
-    description='Segmentation on Cimat oil spill dataset',
-    epilog='With a great power comes a great responsability'
-)
-parser.add_argument('arch')
-parser.add_argument('input_dir')
-parser.add_argument('output_dir')
-parser.add_argument('train_dataset')
-parser.add_argument('cross_dataset')
-parser.add_argument('test_dataset')
-parser.add_argument('num_epochs')
-args = parser.parse_args()
-arch = args.arch
-logging.basicConfig(filename=f"{arch}_app.log", filemode='w', format='%(asctime)s: %(name)s %(levelname)s - %(message)s', level=logging.INFO)
+if __name__ == 'main':
+    parser = argparse.ArgumentParser(
+        prog='Oil spill cimat dataset segmentation',
+        description='Segmentation on Cimat oil spill dataset',
+        epilog='With a great power comes a great responsability'
+    )
+    parser.add_argument('arch')
+    parser.add_argument('input_dir')
+    parser.add_argument('output_dir')
+    parser.add_argument('train_dataset')
+    parser.add_argument('cross_dataset')
+    parser.add_argument('test_dataset')
+    parser.add_argument('num_epochs')
+    args = parser.parse_args()
+    arch = args.arch
+    logging.basicConfig(filename=f"{arch}_app.log", filemode='w', format='%(asctime)s: %(name)s %(levelname)s - %(message)s', level=logging.INFO)
 
-# redirect lightning logging to file
-logger = logging.getLogger("lightning.pytorch")
-#logger.addHandler(logging.FileHandler("core.log"))
+    # redirect lightning logging to file
+    logger = logging.getLogger("lightning.pytorch")
+    #logger.addHandler(logging.FileHandler("core.log"))
 
-logging.info("Start!")
-encoder = 'resnet34'
-main(arch, encoder, args.input_dir, args.output_dir, args.train_dataset, args.cross_dataset, args.test_dataset, int(args.num_epochs))
-logging.info("Done!")
+    logging.info("Start!")
+    encoder = 'resnet34'
+    main(arch, encoder, args.input_dir, args.output_dir, args.train_dataset, args.cross_dataset, args.test_dataset, int(args.num_epochs))
+    logging.info("Done!")
