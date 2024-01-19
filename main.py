@@ -68,12 +68,14 @@ def process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset, 
     save_figure(test_dataset, "Test", os.path.join(figures_dir, "figure_03.png"))
 
     logging.info("2.- Model instantiation")
-    model = CimatOilSpillModel(arch, "resnet34", in_channels=3, out_classes=1)
+    encoder = "resnet34"
+    model = CimatOilSpillModel(arch, encoder=encoder, in_channels=3, out_classes=1)
 
     logging.info("3.- Model training")
     logger = CSVLogger(os.path.join(results_dir, logs_dir))
     trainer = pl.Trainer(gpus=1, max_epochs=num_epochs, logger=logger)
     trainer.fit(model, train_dataloader=train_dataloader, val_dataloaders=valid_dataloader)
+    trainer.save_checkpoint(f"{arch}_{encoder}_{num_epochs}epochs.ckpt")
 
     logging.info("4.- Validation and test metrics")
     # run validation dataset
