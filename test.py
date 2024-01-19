@@ -34,6 +34,7 @@ parser.add_argument('cross_dataset')
 parser.add_argument('test_dataset')
 parser.add_argument('num_epochs')
 args = parser.parse_args()
+print(args)
 arch = args.arch
 encoder = 'resnet34'
 test(arch, encoder, args.input_dir, args.output_dir, args.train_dataset, args.cross_dataset, args.test_dataset, int(args.num_epochs))
