@@ -52,9 +52,10 @@ def process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset, 
 
     train_dataloader, valid_dataloader, test_dataloader = create_dataloaders(os.cpu_count(), train_dataset, valid_dataset, test_dataset)
 
-    figures_dir = f"{arch}_figures"
-    results_dir = f"{arch}_results"
-    logs_dir = f"{arch}_logs"
+    base_dir = "results"
+    figures_dir = os.path.join(base_dir, f"{arch}_figures")
+    results_dir = os.path.join(base_dir, f"{arch}_results")
+    logs_dir = os.path.join(base_dir, f"{arch}_logs")
     if not os.path.exists(figures_dir):
         os.makedirs(figures_dir, exist_ok=True)
     if not os.path.exists(results_dir):
@@ -72,7 +73,7 @@ def process(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset, 
     model = CimatOilSpillModel(arch, encoder=encoder, in_channels=3, out_classes=1)
 
     logging.info("3.- Model training")
-    logger = CSVLogger(os.path.join(results_dir, logs_dir))
+    logger = CSVLogger(logs_dir)
     trainer = pl.Trainer(gpus=1, max_epochs=num_epochs, logger=logger, default_root_dir='results')
     trainer.fit(model, train_dataloader=train_dataloader, val_dataloaders=valid_dataloader)
     trainer.save_checkpoint(f"{arch}_{encoder}_{num_epochs}epochs.ckpt")
