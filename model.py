@@ -90,14 +90,14 @@ class CimatOilSpillModel(pl.LightningModule):
         self.log_dict(metrics, prog_bar=True)
 
     def training_step(self, batch, batch_idx):
-        logging.info(f"Training Step, batch idx: {batch_idx}")
+        logging.debug(f"Training Step, batch idx: {batch_idx}")
         return self.shared_step(batch, "train")
 
     def training_epoch_end(self, outputs):
         return self.shared_epoch_end(outputs, "train")
 
     def validation_step(self, batch, batch_idx):
-        logging.info(f"Validation step, batch idx: {batch_idx}")
+        logging.debug(f"Validation step, batch idx: {batch_idx}")
         return self.shared_step(batch, "valid")
 
     def validation_epoch_end(self, outputs):
