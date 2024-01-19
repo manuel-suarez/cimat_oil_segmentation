@@ -15,8 +15,7 @@ def test(input_dir, output_dir, arch, encoder, train_dataset, cross_dataset, tes
     encoder = "resnet34"
     model = CimatOilSpillModel(arch, encoder=encoder, in_channels=3, out_classes=1)
 
-    trainer = pl.Trainer(gpus=1,
-                         max_epochs=num_epochs,
+    trainer = pl.Trainer(max_epochs=num_epochs,
                          default_root_dir='results',
                          resume_from_checkpoint=f"{arch}_{encoder}_{num_epochs}epochs.ckpt")
     trainer.fit(model, train_dataloader=train_dataloader, val_dataloaders=valid_dataloader)
