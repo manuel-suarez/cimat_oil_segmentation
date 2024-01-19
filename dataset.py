@@ -1,7 +1,9 @@
 import os
 import torch
 import numpy as np
+import pandas as pd
 import logging
+from torch.utils.data import DataLoader
 
 from skimage.io import imread
 
@@ -48,3 +50,27 @@ class CimatOilSpillDataset(torch.utils.data.Dataset):
         label = np.moveaxis(label, -1, 0)
         # Return data
         return dict(image=image, label=label)
+
+# Auxiliary functions
+def create_datasets(data_dir, train_dataset, cross_dataset, test_dataset):
+    featuresPath = os.path.join(data_dir, 'features')
+    labelsPath = os.path.join(data_dir, 'labels')
+    featureExt = '.tiff'
+    labelExt = '.pgm'
+    dims = [224, 224, 3]
+    featuresChannels = ['ORIGIN', 'ORIGIN', 'VAR']
+    trainingSet = pd.read_csv(train_dataset)
+    crossvalidSet = pd.read_csv(cross_dataset)
+    testingSet = pd.read_csv(test_dataset)
+    return (
+        CimatOilSpillDataset(trainingSet["key"], featuresPath, labelsPath, featuresChannels, featureExt, labelExt, dims),
+        CimatOilSpillDataset(crossvalidSet["key"], featuresPath, labelsPath, featuresChannels, featureExt, labelExt, dims),
+        CimatOilSpillDataset(testingSet['key'], featuresPath, labelsPath, featuresChannels, featureExt, labelExt, dims)
+    )
+
+def create_dataloaders(n_cpu, train_dataset, valid_dataset, test_dataset):
+    return (
+        DataLoader(train_dataset, batch_size=32, shuffle=True, num_workers=n_cpu),
+        DataLoader(valid_dataset, batch_size=32, shuffle=False, num_workers=n_cpu),
+        DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=n_cpu)
+    )
